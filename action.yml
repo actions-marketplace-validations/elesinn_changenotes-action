@@ -1,0 +1,36 @@
+name: 'Changenotes'
+description: 'Generate AI-powered changelogs on release and update release notes automatically'
+author: 'Changenotes'
+
+branding:
+  icon: 'book-open'
+  color: 'purple'
+
+inputs:
+  changenotes-api-key:
+    description: 'Your Changenotes API key (generate at changenotes.app/settings)'
+    required: true
+  github-token:
+    description: 'GitHub token for reading commits and updating release notes'
+    required: false
+    default: ${{ github.token }}
+  update-release:
+    description: 'Whether to update the GitHub release body with the generated changelog'
+    required: false
+    default: 'true'
+  api-url:
+    description: 'Changenotes API URL (override for self-hosted)'
+    required: false
+    default: 'https://changenotes.app'
+
+outputs:
+  changelog:
+    description: 'The generated changelog in Markdown format'
+  tag:
+    description: 'The release tag that was processed'
+  previous-tag:
+    description: 'The previous tag used as the base for comparison'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
